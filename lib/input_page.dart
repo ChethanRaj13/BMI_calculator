@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'reusable.dart';
+import 'ABC.dart';
+import 'constants.dart';
 
 class InputPage extends StatefulWidget {
+
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-  @override
+  int height = 180;
+  int weight = 60;
+  int age = 20;
+  Color malecolor = kinactivecolor;
+  Color femalecolor = kinactivecolor;
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -18,22 +27,39 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: Row(
                   children: [
-                    Reuse(
-                      colour: Color(0xFF1D1E33),
-                      cardChild: ABC(
-                        gender: 'MALE',
-                        ic: FontAwesomeIcons.mars,
+                    GestureDetector(
+                      onTap: (){
+                        print("you tapped male");
+                        setState(() {
+                          updatecolor(1);
+                        });
+                      },
+                      child: Reuse(
+                        colour: malecolor,
+                        cardChild: ABC(
+                          gender: 'MALE',
+                          ic: FontAwesomeIcons.mars,
+                        ),
                       ),
                     ),
-                    Reuse(
-                      colour: Color(0xFF1D1E33),
-                      cardChild: ABC(
-                        gender: 'FEMALE',
-                        ic: FontAwesomeIcons.venus,
+                    GestureDetector(
+                      onTap: (){
+                        print("taped female");
+                        setState(() {
+                          updatecolor(2);
+                        });
+                      },
+                      child: Reuse(
+                        colour: femalecolor,
+                        cardChild: ABC(
+                          gender: 'FEMALE',
+                          ic: FontAwesomeIcons.venus,
+                        ),
                       ),
                     ),
                    // Reuse(),
@@ -43,11 +69,46 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                 child:
                 Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "HEIGHT",
+                            style: kLabelTextStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            height.toString(),
+                            style: kHeightTextStyle,
+                          ),
+                          Text(
+                            "cm",
+                                style: kLabelTextStyle,
+                          ),
+                        ],
+                      ),
+                      Slider(
+                          value: height.toDouble(),
+                          min: 120.0,
+                          max: 220.0,
+                          activeColor: Color(0xFFEB1555),
+                          inactiveColor: Color(0xFF8D8E98),
+                          onChanged: (double newValue){
+                            setState(() {
+                              height = newValue.round();
+                            });
+                      }),
+                    ],
+                  ),
                   height: 200,
                   width: 400,
                   margin: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: Color(0xFF1D1E33),
+                    color: kactivecolor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -55,8 +116,102 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                 child: Row(
                   children: [
-                   // Reuse(),
-                    // Reuse(),
+                   Reuse(
+                     colour: kinactivecolor,
+                     cardChild: Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Text(
+                             "WEIGHT",
+                           style: kLabelTextStyle,
+                         ),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           crossAxisAlignment: CrossAxisAlignment.baseline,
+                           textBaseline: TextBaseline.alphabetic,
+                           children: [
+                             Text(
+                               weight.toString(),
+                               style: kHeightTextStyle,
+                             ),
+                             Text(
+                               "KG",
+                               style: kLabelTextStyle,
+                             ),
+                           ],
+                         ),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           crossAxisAlignment: CrossAxisAlignment.center,
+                           children: [
+                             FloatingActionButton(
+                                 onPressed: (){
+                                   setState(() {
+                                     weight++;
+                                   });
+                                 }
+                             ),
+                             SizedBox(width: 15,),
+                             FloatingActionButton(
+                                 onPressed: (){
+                                   setState(() {
+                                     weight--;
+                                   });
+                                 }
+                             ),
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
+                    Reuse(
+                      colour: kinactivecolor,
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "AGE",
+                            style: kLabelTextStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                age.toString(),
+                                style: kHeightTextStyle,
+                              ),
+                              Text(
+                                "KG",
+                                style: kLabelTextStyle,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              FloatingActionButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      age++;
+                                    });
+                                  }
+                              ),
+                              SizedBox(width: 15,),
+                              FloatingActionButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      age--;
+                                    });
+                                  }
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -65,63 +220,29 @@ class _InputPageState extends State<InputPage> {
       ),
     );
   }
-}
-
-class ABC extends StatelessWidget {
-  final String gender;
-  final IconData? ic;
-
-  const ABC({
-    Key? key,
-    required this.gender,
-    this.ic,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          ic,
-          size: 80,
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          gender,
-          style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF8D8F98),
-          ),
-        ),
-      ],
-    );
+  void updatecolor(int gender){
+    if(gender == 1){
+      if(malecolor == kinactivecolor){
+        malecolor = kactivecolor;
+        femalecolor = kinactivecolor;
+      }
+      else{
+        malecolor = kinactivecolor;
+        femalecolor = kactivecolor;
+      }
+    }
+    if(gender == 2){
+      if(femalecolor == kinactivecolor){
+        malecolor = kinactivecolor;
+        femalecolor = kactivecolor;
+      }
+      else{
+        malecolor = kactivecolor;
+        femalecolor = kinactivecolor;
+      }
+    }
   }
 }
 
-class Reuse extends StatelessWidget {
-  final Color colour;
-  final Widget? cardChild;
 
-  const Reuse({
-    Key? key,
-    required this.colour,
-    this.cardChild,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      width: 165,
-      margin: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: colour, // ✅ use the colour passed from outside
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: cardChild, // ✅ show the child if provided
-    );
-  }
-}
