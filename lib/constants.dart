@@ -12,3 +12,7 @@ const kHeightTextStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.w900,
 );
+const kResultTextStyle = TextStyle(
+  fontSize: 20,
+  color: Colors.green,
+);

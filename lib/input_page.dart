@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'reusable.dart';
 import 'ABC.dart';
 import 'constants.dart';
+import 'Result.dart';
+import 'calculatorbrain.dart';
 
 class InputPage extends StatefulWidget {
 
@@ -149,7 +151,9 @@ class _InputPageState extends State<InputPage> {
                                    setState(() {
                                      weight++;
                                    });
-                                 }
+                                 },
+                               child: Icon(Icons.add),
+                               shape: CircleBorder(),
                              ),
                              SizedBox(width: 15,),
                              FloatingActionButton(
@@ -157,7 +161,9 @@ class _InputPageState extends State<InputPage> {
                                    setState(() {
                                      weight--;
                                    });
-                                 }
+                                 },
+                               child: Icon(Icons.remove),
+                               shape: CircleBorder(),
                              ),
                            ],
                          ),
@@ -182,10 +188,6 @@ class _InputPageState extends State<InputPage> {
                                 age.toString(),
                                 style: kHeightTextStyle,
                               ),
-                              Text(
-                                "KG",
-                                style: kLabelTextStyle,
-                              ),
                             ],
                           ),
                           Row(
@@ -197,7 +199,9 @@ class _InputPageState extends State<InputPage> {
                                     setState(() {
                                       age++;
                                     });
-                                  }
+                                  },
+                                  child: Icon(Icons.add),
+                                  shape: CircleBorder(),
                               ),
                               SizedBox(width: 15,),
                               FloatingActionButton(
@@ -205,7 +209,9 @@ class _InputPageState extends State<InputPage> {
                                     setState(() {
                                       age--;
                                     });
-                                  }
+                                  },
+                                child: Icon(Icons.remove),
+                                shape: CircleBorder(),
                               ),
                             ],
                           ),
@@ -213,6 +219,34 @@ class _InputPageState extends State<InputPage> {
                       ),
                     ),
                   ],
+                ),
+              ),
+
+              GestureDetector(
+                onTap: (){
+                  Calculatorbrain b = Calculatorbrain(height: height, weight: weight);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Result(
+                      bmi: b.calbmi(),
+                      sug: b.suggest(),
+                      res: b.res(),
+                    )),
+                  );
+                },
+                child: Container(
+                  child: Center(
+                    child: Text(
+                        "CALCULATE",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  color: Color(0xFFEB1555),
+                  margin: EdgeInsets.only(top: 10),
+                  width: double.infinity,
+                  height: 75,
                 ),
               ),
             ],
